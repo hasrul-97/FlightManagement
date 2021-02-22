@@ -1,0 +1,98 @@
+<div class="mt-4 d-flex justify-content-center" style="margin-bottom: 60px;" *ngIf="!this.showPassengerDetail">
+    <mat-spinner></mat-spinner>
+</div>
+<div class="mt-4 mr-4 ml-4 scroll table-hover" style="margin-bottom: 60px;" [hidden]="!this.showPassengerDetail">
+
+    <table mat-table [dataSource]="this.dataSource" matSort class="mat-elevation-z8">
+
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Passenger Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="age">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Age </th>
+            <td mat-cell *matCellDef="let element"> {{element.age}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="passportNumber">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Passport Number </th>
+            <td mat-cell *matCellDef="let element"> {{element.passportNumber}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
+            <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dateOfBirth">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of Birth </th>
+            <td mat-cell *matCellDef="let element"> {{element.dateOfBirth | date}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="isSpecialMealRequired">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Special Meal </th>
+            <td mat-cell *matCellDef="let element"> {{element.isSpecialMealRequired==1?'Required':'Not Required'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ancillaryService">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Ancillary Service </th>
+            <td mat-cell *matCellDef="let element"> {{element.ancillaryService}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="flightID">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Flight </th>
+            <td mat-cell *matCellDef="let element"> {{element.flightID}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="isCheckedIn">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Check-in Status </th>
+            <td mat-cell *matCellDef="let element"> {{element.isCheckedIn==1?'Checked-in':'Check-in Required'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="seatNumber">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Seat Number </th>
+            <td mat-cell *matCellDef="let element">
+                {{element.seatNumber===null?'Kindly check-in to allocate a seat':element.seatNumber}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="isWheelChairRequired">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Check-in Status </th>
+            <td mat-cell *matCellDef="let element"> {{element.isWheelChairRequired==1?'Required':'Not Required'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Update </th>
+            <mat-cell *matCellDef="let element">
+                <button class="btn btn-primary mr-auto ml-auto" style="width: 135px;margin-top: 5px;"
+                    *ngIf="this.checkDate(element)" data-toggle="modal" data-target="#exampleModal" mat-button
+                    (click)="this.editPassenger(element)">Edit</button>
+                <button  *ngIf="!this.checkDate(element)" disabled class="btn btn-primary mr-auto ml-auto" style="width: 135px;color:white;margin-top: 5px;" mat-button>
+                    Departed
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
+
+<div #exampleModal class="modal fade" id="exampleModal" *ngIf="this.modalClicked" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Check-In</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body modalHeight">
+                <app-edit-passenger (passenger)="handle($event)" [PassengerData]="this.passengerData">
+                </app-edit-passenger>
+            </div>
+        </div>
+    </div>
+</div>

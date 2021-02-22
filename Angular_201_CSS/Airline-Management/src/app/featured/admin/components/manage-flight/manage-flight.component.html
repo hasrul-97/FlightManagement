@@ -1,0 +1,86 @@
+<div class="mt-4 d-flex justify-content-center" style="margin-bottom: 60px;" *ngIf="!this.showFlightDetail">
+    <mat-spinner></mat-spinner>
+</div>
+<div class="mt-4 mr-4 ml-4 scroll table-hover" style="margin-bottom: 60px;" *ngIf="this.showFlightDetail">
+
+    <table mat-table [dataSource]="flightDetails" class="mat-elevation-z8">
+
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="flightID">
+            <th mat-header-cell *matHeaderCellDef> Flight ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.flightID}} </td>
+        </ng-container>
+
+        <!-- Flight Name Column -->
+        <ng-container matColumnDef="flightName">
+            <th mat-header-cell *matHeaderCellDef> Airline Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.flightName}} </td>
+        </ng-container>
+
+        <!-- Flight Time Column -->
+        <ng-container matColumnDef="flightTime">
+            <th mat-header-cell *matHeaderCellDef> Flight Time </th>
+            <td mat-cell *matCellDef="let element"> {{element.flightTime | date:'medium'}} </td>
+        </ng-container>
+
+        <!-- Shopping Item Column -->
+        <ng-container matColumnDef="shoppingItem">
+            <th mat-header-cell *matHeaderCellDef> Shopping Items </th>
+            <td mat-cell *matCellDef="let element"> {{element.shoppingItem}} </td>
+        </ng-container>
+
+        <!-- Special Meal Column -->
+        <ng-container matColumnDef="specialMeal">
+            <th mat-header-cell *matHeaderCellDef> Special Meal </th>
+            <td mat-cell *matCellDef="let element"> {{element.specialMeal}} </td>
+        </ng-container>
+
+        <!-- Ancillary Service Column -->
+        <ng-container matColumnDef="ancillaryService">
+            <th mat-header-cell *matHeaderCellDef> Ancillary Service </th>
+            <td mat-cell *matCellDef="let element"> {{element.ancillaryService}} </td>
+        </ng-container>
+
+        <!-- Excess Baggage Allowed Column -->
+        <ng-container matColumnDef="excessBaggageAllowed">
+            <th mat-header-cell *matHeaderCellDef> Excess Baggage </th>
+            <td mat-cell *matCellDef="let element"> {{element.excessBaggageAllowed==1?'Allowed':'Not Allowed'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef> Update </th>
+            <mat-cell *matCellDef="let element">
+                <button class="btn btn-primary mr-auto ml-auto" style="width: 135px; margin-top: 5px;"
+                    *ngIf="this.checkdate(element)" data-toggle="modal" data-target="#exampleModal" mat-button
+                    (click)="this.editFlight(element)">Edit</button>
+                <button disabled *ngIf="!this.checkdate(element)" class="btn btn-primary mr-auto ml-auto"
+                    style="width: 135px;color:white;margin-top: 5px;" mat-button>
+                    Departed
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
+
+
+<div class="modal fade" id="exampleModal" *ngIf="this.showModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Check-In</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body modalHeight">
+                <app-edit-flight (flight)="handle($event)" [FlightData]="this.flightData">
+                </app-edit-flight>
+            </div>
+        </div>
+    </div>
+</div>

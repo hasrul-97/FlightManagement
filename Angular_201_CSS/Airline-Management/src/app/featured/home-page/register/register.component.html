@@ -1,0 +1,27 @@
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <form [formGroup]="this.RegisterForm" class="login100-form validate-form">
+
+                <span class="login100-form-title p-b-34 p-t-27">
+                    Register
+                </span>
+                <p class="text-white">Looks like we do not have you registered with us. By submitting, you agree to
+                    share and register your
+                    email address with us.</p>
+
+                <div class="wrap-input100 validate-input">
+                    <label style="color:white" for="email">Email Address</label>
+                    <input class="input100" type="text" disabled id="email" formControlName="email" name="username"
+                        placeholder="Username">
+                </div>
+
+                <div class="container-login100-form-btn">
+                    <button (click)="login()" class="login100-form-btn">
+                        Register
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

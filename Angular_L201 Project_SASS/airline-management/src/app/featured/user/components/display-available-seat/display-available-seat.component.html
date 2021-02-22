@@ -1,0 +1,21 @@
+<div class="">
+    <p>Legends:</p>
+    <div class="row d-flex justify-content-center">
+        <div class="legend available"></div><label class="mr-2 ml-1" style="line-height: 1.8;">Available Seat</label>
+        <div class="legend occupied"></div><label class="mr-2 ml-1" style="line-height: 1.8;">Occupied Seat</label>
+        <div class="legend choosed"></div><label class="mr-2 ml-1" style="line-height: 1.8;">Selected Seat</label>
+    </div>
+</div>
+<div class="mr-4 ml-4">
+    <div *ngFor="let row of this.seats;" class="mt-4 mb-4 row parent d-flex justify-content-center">
+        <div (click)="chooseSeat(i.seatNumber,i.occupied)" id="{{i.seatNumber}}" class="availableSeat mr-2 ml-2" [ngClass]="{'occupied':i.occupied,'available':!i.occupied}" *ngFor="let i of row.left">
+            <a>{{i.seatNumber}}</a>
+        </div>
+        <div style="margin-right: 40px;">
+
+        </div>
+        <div (click)="chooseSeat(i.seatNumber,i.occupied)" id="{{i.seatNumber}}" class="availableSeat mr-2 ml-2" [ngClass]="{'occupied':i.occupied,'available':!i.occupied}" *ngFor="let i of row.right">
+            <a>{{i.seatNumber}}</a>
+        </div>
+    </div>
+</div>

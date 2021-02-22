@@ -1,0 +1,121 @@
+<div class="mr-4 ml-4">
+    <form [formGroup]="AddPassenger">
+        <div class="row mt-4 mb-4">
+            <div class="col-sm-4">
+                <mat-form-field class="full">
+                    <mat-label>Passenger Name</mat-label>
+                    <input matInput type="text" formControlName="Name" required>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field class="full">
+                    <mat-label>Date of Birth</mat-label>
+                    <input matInput [matDatepicker]="picker" (dateChange)="calculateAge()" formControlName="DateOfBirth"
+                        required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field class="full" apperance="outline">
+                    <mat-label>Age</mat-label>
+                    <input readonly matInput type="number" formControlName="Age" required>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row mt-4 mb-4">
+            <div class="col-sm-4">
+                <mat-form-field class="full">
+                    <mat-label>Passport Number</mat-label>
+                    <input matInput type="text" formControlName="PassportNumber" required>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field class="full">
+                    <mat-label>Flight</mat-label>
+                    <mat-select placeholder="Select Flight" formControlName="FlightGUID" required>
+                        <mat-option *ngFor="let flight of flightDetails" (click)="chooseFlight(flight.flightGUID)"
+                            [value]="flight.flightGUID">
+                            {{ flight.flightName+'-'+flight.flightID }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="
+                              AddPassenger.controls['FlightGUID'].hasError(
+                                'required'
+                              ) && AddPassenger.controls['FlightGUID'].pristine
+                            ">
+                        <b>Please select a flight for the passenger</b>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4" *ngIf="this.hasSpecialMeal">
+                <mat-checkbox class="example-margin" [disabled]="" formControlName="IsSpecialMealRequired">Is Special
+                    Meal Required
+                </mat-checkbox>
+            </div>
+        </div>
+        <div class="row mt-4 mb-4">
+            <div class="col-sm-4">
+                <mat-checkbox class="example-margin" [disabled]="" formControlName="IsWheelChairRequired">Is Wheel Chair Required
+                </mat-checkbox>
+            </div>
+        </div>
+        <div class="row mt-4 mb-4" *ngIf="this.AddPassenger.value.IsSpecialMealRequired">
+            <div class="col-sm-12">
+                <!-- <mat-form-field class="full">
+                    <mat-chip-list #chipList2 aria-label="Ancillary Service" formControlName="AncillaryService">
+                        <mat-chip *ngFor="let item of ancillaryService" [selectable]="selectable"
+                            [removable]="removable" (removed)="removeAncillaryService(item)">
+                            {{item}}
+                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                        </mat-chip>
+                        <input placeholder="Ancillary Services" #fruitInput [matChipInputFor]="chipList2"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            (matChipInputTokenEnd)="addAncillaryService($event)">
+                    </mat-chip-list>
+                </mat-form-field> -->
+                <mat-form-field class="full">
+                    <mat-label>Special Meal</mat-label>
+                    <mat-select formControlName="SpecialMeal">
+                        <mat-option *ngFor="let item of specialMealForFlight" [value]="item">{{item}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row mt-4 mb-4">
+            <div class="col-sm-12">
+                <mat-form-field class="full">
+                    <mat-label>Address</mat-label>
+                    <input matInput type="text" formControlName="Address" required>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row mt-4 mb-4">
+            <div class="col-sm-12">
+                <!-- <mat-form-field class="full">
+                    <mat-chip-list #chipList2 aria-label="Ancillary Service" formControlName="AncillaryService">
+                        <mat-chip *ngFor="let item of ancillaryService" [selectable]="selectable"
+                            [removable]="removable" (removed)="removeAncillaryService(item)">
+                            {{item}}
+                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                        </mat-chip>
+                        <input placeholder="Ancillary Services" #fruitInput [matChipInputFor]="chipList2"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            (matChipInputTokenEnd)="addAncillaryService($event)">
+                    </mat-chip-list>
+                </mat-form-field> -->
+                <mat-form-field class="full">
+                    <mat-label>Ancillary Service</mat-label>
+                    <mat-select formControlName="AncillaryService" multiple>
+                        <mat-option *ngFor="let item of ancillaryServiceForFlight" [value]="item">{{item}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-success" (click)="AddPassengerData()">
+                Add
+            </button>
+        </div>
+    </form>
+</div>

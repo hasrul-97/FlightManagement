@@ -1,0 +1,176 @@
+<nav class="row navbar navbar-expand-lg navbar-absolute bg-white shadow fixed-top">
+    <div class="container-fluid mt-1 mr-2 ml-2">
+        <div class="navbar-wrapper">
+            <img style="width: 180px!important;" alt="Mindtree Ltd."
+                src="https://www.mindtree.com/themes/custom/mindtree_theme/mindtree-lnt-logo-png.png" />
+            <!-- <strong class="color">Airline Management System</strong> -->
+        </div>
+        <button class="navbar-toggler mb-4" type="button" (click)="menu()" *ngIf="this.authenticator.isLoggedIn" style="color: #5F0A87;"
+            aria-controls="navigation-index" aria-expanded="false">
+            <span class="fa fa-bars" style="color: #5F0A87;"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            <ul class="navbar-nav">
+                <!-- <li id="userMenu" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle color" role="button" (click)="toggleRgName()">
+                        <i class="fa fa-snowflake-o location_world"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" id='menuBox'
+                        aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" (click)="changeRg(rgValue)"
+                            *ngFor="let rgValue of rgValueForUser">{{rgValue}}</a>
+                    </div>
+                </li> -->
+
+                <div class="btn-group" *ngIf="this.authenticator.isLoggedIn">
+                    <li class="nav-item">
+                        <!-- <a class="nav-link color pl-3 pr-3" routerLink='dashboard'
+                            [ngClass]="{'active':this.router.url.split('/')[2]==='dashboard'}">
+                            <span class="fa fa-home" style="font-size: 1.6em!important;"></span>
+                        </a> -->
+                        <a class="nav-link color pl-3 pr-3">Welcome, {{this.authenticator.userRole}}!</a>
+                    </li>
+                </div>
+                <div class="btn-group"
+                    *ngIf="this.authenticator.isLoggedIn && (this.authenticator.userRole==='admin'||this.authenticator.userRole==='Admin' ||this.authenticator.userRole==='user' ||this.authenticator.userRole==='User')">
+                    <li class="nav-item">
+                        <a class="nav-link color pl-3 pr-3" routerLink='user' routerLinkActive="active"
+                            [ngClass]="{'active':this.router.url.split('/')[2]==='dashboard'}">
+                            Services
+                        </a>
+                    </li>
+                </div>
+                <div class="btn-group"
+                    *ngIf="this.authenticator.isLoggedIn&&(this.authenticator.userRole==='admin'||this.authenticator.userRole==='Admin')">
+                    <li class="nav-item">
+                        <a class="nav-link color pl-3 pr-3" routerLink='admin' routerLinkActive="active"
+                            [ngClass]="{'active':this.router.url.split('/')[2]==='dashboard'}">
+                            Manage
+                        </a>
+                    </li>
+                </div>
+                <!-- <div class="btn-group" *ngIf="this.authenticator.isLoggedIn&&this.authenticator.userRole==='admin'">
+                    <li class="nav-item">
+                        <a class="nav-link color pl-3 pr-3" routerLink='admin/Flights'
+                            [ngClass]="{'active':this.router.url.split('/')[2]==='dashboard'}">
+                            Flights
+                        </a>
+                    </li>
+                </div> -->
+                <!-- <div class="btn-group cursor" *ngIf="!this.authenticator.isLoggedIn">
+                    <li class="nav-item">
+                        <a class="nav-link color pl-3 pr-3" (click)="this.authenticator.GoogleLogin()">
+                            Login
+                        </a>
+                    </li>
+                </div> -->
+                <div class="btn-group cursor" *ngIf="this.authenticator.isLoggedIn">
+                    <li class="nav-item">
+                        <a class="nav-link color pl-3 pr-3" (click)="this.authenticator.signOut()">
+                            Log Out
+                        </a>
+                    </li>
+                </div>
+
+
+                <!-- <div class="btn-group">
+                    <li class="nav-item">
+                        <a data-toggle="dropdown" role="button" (click)="toggleUpdates()"
+                            class="nav-link pr-3 pl-3 color activeMenu cursor" routerLinkActive='active'
+                            [routerLinkActiveOptions]="{exact: true}">
+                            My Updates
+                            <span><i class="fa fa-caret-down original" id="caretDown"></i></span>
+                            <div class="dropdown-menu dropdown-menu-right marginForBox" style="margin-top: -20px;"
+                                 id='updateBox' aria-labelledby="navbarDropdownMenu">
+                                <div class="column" *ngIf="this.windowWidth<1000" id="scroll" (scroll)="this.last()">
+                                    <a class="dropdown-item" (click)="this.closeFilter()"
+                                        routerLink="/{{id}}/opportunity" routerLinkActive="updateMenuActive">
+                                        <span class="fa fa-laptop fa-2x mr-2"></span>Opportunity
+                                    </a>
+                                    <a class="dropdown-item" (click)="this.closeFilter()"
+                                        routerLink="/{{id}}/customer-Project" routerLinkActive="updateMenuActive">
+                                        <span class="fa fa-users fa-2x mr-2"></span>Customer Project
+                                    </a>
+                                    <a class="dropdown-item" (click)="this.closeFilter()"
+                                        routerLink="/{{id}}/internal-Project" routerLinkActive="updateMenuActive">
+                                        <span class="fa fa-sitemap fa-2x mr-2"></span>InternalProject
+                                    </a>
+                                    <a class="dropdown-item" (click)="this.closeFilter()" routerLink="/workshop"
+                                        routerLinkActive="updateMenuActive">
+                                        <span class="fa fa-briefcase fa-2x mr-2"></span>Demo-Workshop
+                                    </a>
+
+                                    <a class="dropdown-item" (click)="this.closeFilter()" routerLink="/knowledge-share"
+                                        routerLinkActive="updateMenuActive">
+                                        <span class="fa fa-book fa-2x mr-2"></span>Knowledge Share
+                                    </a>
+                                    <a class="dropdown-item" (click)="this.closeFilter()" routerLink="/cto-initiative"
+                                        routerLinkActive="updateMenuActive">
+                                        <span class="fa fa-building fa-2x mr-2"></span>CTO Initiative
+                                    </a>
+                                    <a class="dropdown-item" (click)="this.closeFilter()"
+                                        routerLink="/thought-LeaderShip" routerLinkActive="updateMenuActive">
+                                        <span class="fa fa-user fa-2x mr-2"></span>Thought LeaderShip
+                                    </a>
+                                    <a class="dropdown-item" id="last" (click)="this.closeFilter()"
+                                        routerLink="/{{id}}/review" routerLinkActive="updateMenuActive">
+                                        <span class="fa fa-book fa-2x mr-2"></span>Review
+                                    </a>
+
+                                    <a class="dropdown-item" (click)="this.closeFilter()" routerLink="/training"
+                                        routerLinkActive="updateMenuActive">
+                                        <span class="fa fa-graduation-cap fa-2x mr-2"></span>Training
+                                    </a>
+                                </div>
+                                <div class="column middle" *ngIf="this.windowWidth>1000">
+                                    <a class="dropdown-item" (click)="this.closeFilter()"
+                                        routerLink="/{{id}}/opportunity" routerLinkActive="updateMenuActive">
+                                        <span class="fa fa-laptop fa-2x mr-2"></span>Opportunity
+                                    </a>
+                                    <a class="dropdown-item" (click)="this.closeFilter()"
+                                        routerLink="/{{id}}/customer-Project" routerLinkActive="updateMenuActive">
+                                        <span class="fa fa-users fa-2x mr-2"></span>Customer Project
+                                    </a>
+                                    <a class="dropdown-item" (click)="this.closeFilter()"
+                                        routerLink="/{{id}}/internal-Project" routerLinkActive="updateMenuActive">
+                                        <span class="fa fa-sitemap fa-2x mr-2"></span>InternalProject
+                                    </a>
+                                    <a class="dropdown-item" (click)="this.closeFilter()" routerLink="/workshop"
+                                        routerLinkActive="updateMenuActive">
+                                        <span class="fa fa-briefcase fa-2x mr-2"></span>Demo-Workshop
+                                    </a>
+                                </div>
+                                <div class="column middle" *ngIf="this.windowWidth>1000">
+                                    <a class="dropdown-item" (click)="this.closeFilter()" routerLink="/knowledge-share"
+                                        routerLinkActive="updateMenuActive">
+                                        <span class="fa fa-book fa-2x mr-2"></span>Knowledge Share
+                                    </a>
+                                    <a class="dropdown-item" (click)="this.closeFilter()" routerLink="/cto-initiative"
+                                        routerLinkActive="updateMenuActive">
+                                        <span class="fa fa-building fa-2x mr-2"></span>CTO Initiative
+                                    </a>
+                                    <a class="dropdown-item" (click)="this.closeFilter()"
+                                        routerLink="/thought-LeaderShip" routerLinkActive="updateMenuActive">
+                                        <span class="fa fa-user fa-2x mr-2"></span>Thought LeaderShip
+                                    </a>
+                                    <a class="dropdown-item" (click)="this.closeFilter()" routerLink="/{{id}}/review"
+                                        routerLinkActive="updateMenuActive">
+                                        <span class="fa fa-book fa-2x mr-2"></span>Review
+                                    </a>
+                                </div>
+                                <div class="column" *ngIf="this.windowWidth>1000">
+                                    <a class="dropdown-item" (click)="this.closeFilter()" routerLink="/training"
+                                        routerLinkActive="updateMenuActive">
+                                        <span class="fa fa-graduation-cap fa-2x mr-2"></span>Training
+                                    </a>
+                                </div>
+                                <span class="fa fa-arrow-down original arrowForUpdates" id="arrow"></span>
+                            </div>
+                        </a>
+                    </li>
+                </div> -->
+            </ul>
+        </div>
+
+    </div>
+</nav>

@@ -1,0 +1,10 @@
+.color{
+    color: #5f0a87;
+    font-weight: bold;
+}
+
+.active {
+    color: white;
+    background-color: #5f0a87;
+    border-radius: 5px;
+}
